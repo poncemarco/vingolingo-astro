@@ -1,0 +1,48 @@
+---
+import { COLOR_PALETTE } from "@/consts/colors.ts"
+
+const { primary_color }= COLOR_PALETTE
+import NavbarDesktop from "@/components//ui/navbar/NavbarDesktop.astro"
+import NavbarMobile from "@/components/ui/navbar/NavbarMobile.astro"
+---
+<style define:vars={{
+    primary_color
+}}>
+    nav {
+        background-color: var(--primary_color);
+    }
+</style>
+
+
+<nav class="bg-primary"> 
+    <div id="desktop-navbar">
+        <NavbarDesktop />
+    </div>
+    <div id="mobile-navbar">
+        <NavbarMobile />
+    </div>
+</nav>
+
+<script>
+    const desktopNavbar = document.getElementById("desktop-navbar") as HTMLElement | null;
+    const mobileNavbar = document.getElementById("mobile-navbar") as HTMLElement | null;
+
+    function handleResize(): void {
+        if (!desktopNavbar || !mobileNavbar) {
+            console.error("Navbar elements not found");
+            return;
+        }
+
+        if (window.innerWidth > 768) {
+            desktopNavbar.style.display = "block";
+            mobileNavbar.style.display = "none";
+        } else {
+            desktopNavbar.style.display = "none";
+            mobileNavbar.style.display = "block";
+        }
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+</script>
+
