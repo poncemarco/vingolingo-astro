@@ -1,0 +1,42 @@
+---
+import ContactForm from "@/components/ui/forms/ContactForm.astro"
+import LocationIFrame from "@/components/utils/LocationIFrame.astro"
+import CTALink from "@/components/ui/links/CTALink.astro"
+import WhatsAppIcon from "@/components/ui/icons/social_media/WhatsAppIcon.astro"
+---
+
+
+<section id="contact" class="bg-white py-20">
+    <div class="container mx-auto">
+        <div class="grid grid-cols-2">
+            <div>
+                <h5 class="text-gray-900 text-4xl text-center py-4 mx-20">Contacto</h5>
+                <div class="grid grid-cols-2">
+                    <div class="mx-20 items-center">
+                        <CTALink 
+                        title="Envianos un WhatsApp"
+                        href="tel:+525555555555"
+                    >
+                        <WhatsAppIcon
+                            slot="icon"
+                            classNameStyles="text-black w-10 h-10"
+                        />
+                    </CTALink>
+                    </div>
+                    <div>
+                        <CTALink 
+                            title="Llámanos"
+                            href="tel:+525555555555"
+                        >
+                        </CTALink>
+                    </div>
+                </div>
+                <ContactForm />
+            </div>
+            <div class="mx-20 w-full h-auto">
+                <LocationIFrame />
+            </div>
+        </div>
+    </div>
+
+</section>

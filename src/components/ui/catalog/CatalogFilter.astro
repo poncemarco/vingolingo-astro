@@ -1,0 +1,60 @@
+---
+import Select from '@/components/ui/buttons/select/Select.astro'
+import { fetchCategories} from '@/services/items'
+import type { Category } from '@/types/categories'
+
+const getCategories = async () => {
+    const categories = await fetchCategories()
+    return categories as Category[]
+}
+const categories = await getCategories()
+---
+
+<div class="bg-white py-20">
+    <div class="container mx-auto">
+        <Select 
+            label="Categoría"
+            label_id="category"
+            options={categories.map((category) => category.name)}
+        />
+        <div class="flex flex-col items-center justify-center">
+            <div id="catalog-container"></div>
+        </div>
+        <button id="load-filter">Catalogo</button>
+    </div>
+</div>
+
+<script >
+    import { fetchCatalog } from "@/services/catalog"
+    import CardCatalog from "../cards/CardCatalog";
+    import type { Datum } from '@/types/items'
+
+    const categoryFilter = document.getElementById('category') as  HTMLSelectElement;
+    const catalogContainer = document.getElementById('catalog-container') as HTMLElement;
+    const loadFilter = document.getElementById('load-filter') as HTMLElement;
+
+    let catalogItems : Datum[] = []
+
+    async function initCatalog(){
+        let catalog = await fetchCatalog({
+            paginate : true,
+            categories: [categoryFilter.value]
+        }) as Datum[]
+        catalogItems = catalogItems
+        console.log(catalogItems)
+        catalogContainer.innerHTML = catalogItems.map((item) => 
+        `<h1>${item.name}</h1>`
+        ).join('')
+        //`
+        //     ${CardCatalog({
+        //         name : item.name,
+        //         price: item.price,
+        //         image: item.image,
+        //         id: item.id,
+        //         unit: item.unit,
+        //         category: item.category
+        //     })}
+        // `).join('')
+    }
+    document.addEventListener('DOMContentLoaded', initCatalog)
+</script>
