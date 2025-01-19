@@ -9,7 +9,6 @@ export default function Ticket() {
     const [ progress, setProgress ] = useState(0);
     const [ remaining, setRemaining ] = useState($ticketAmountFreeShipment);
 
-
     useEffect(() => {
         const percent = (total / 900) * 100;
         if (percent >= 100) {
@@ -24,7 +23,6 @@ export default function Ticket() {
             setRemaining(900 - total);
         }
     }, [$ticketItems]);
-
 
     const handleQuantityChange = (id: string, quantity: number) => { // Update the quantity of the item in the ticketItems store 
         if (quantity <= 0) {

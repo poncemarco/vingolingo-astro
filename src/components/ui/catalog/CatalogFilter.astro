@@ -41,7 +41,6 @@ const categories = await getCategories()
             categories: [categoryFilter.value]
         }) as Datum[]
         catalogItems = catalogItems
-        console.log(catalogItems)
         catalogContainer.innerHTML = catalogItems.map((item) => 
         `<h1>${item.name}</h1>`
         ).join('')
