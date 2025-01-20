@@ -4,11 +4,12 @@ import Toast from '@/components/ui/notifications/Toast.tsx';
 import IntCounter from '@/components/utils/IntCounter.tsx';
 import FloatCounter from '@/components/utils/FloatCounter.tsx';
 import ImageWithFallback from '@/components/utils/ImageWithFallback.tsx';
+import type { Image } from '@/types/items.ts';
 
 type Props = {
     name: string;
     price: number;
-    image: string | any;
+    image: Image;
     id: string;
     unit: string;
     category: string;
@@ -25,7 +26,7 @@ export default function CardCatalog({ name,  price, image, id, unit, category }:
         name: name,
         price: price,
         quantity: quantity,
-        imageUrl: image,
+        imageUrl: image.image_path.primary,
         unit: unit,
         thumbnail: image.image_path.thumbnail
     };

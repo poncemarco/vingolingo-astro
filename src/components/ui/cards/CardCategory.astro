@@ -1,0 +1,23 @@
+---
+import type { ImagePath } from '@/types/categories';
+interface Props {
+    id:number,
+    name:string,
+    image:ImagePath,
+    numberOfItems:number
+}
+
+const { id, name, numberOfItems, image } = Astro.props;
+const imageUrl = image && image.image_path.primary ? image.image_path.primary : '/images/placeholder.png';
+---
+<div class="max-w-sm bg-local border-gray-200 rounded-lg shadow h-64 w-100 dark:bg-gray-800 dark:border-gray-700" style={`background-image: url(${imageUrl});  background-size: cover`}>
+    <a href={`/categorias/${name.toLocaleLowerCase()}/1`}>
+        <div class="flex flex-col justify-between h-full p-4 bg-white bg-opacity-5 dark:bg-gray-900 dark:bg-opacity-30">
+            <div>
+                <h3 class="text-4xl text-gray-100 font-semibold dark:text-gray-200">{ name }</h3>
+                <p class="text-sm text-gray-100 dark:text-gray-300">{ numberOfItems } productos</p>
+            </div>
+            
+        </div>
+    </a>
+</div>
