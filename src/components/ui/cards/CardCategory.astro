@@ -1,14 +1,14 @@
 ---
-import type { ImagePath } from '@/types/categories';
+import type { Image } from '@/types/images';
 interface Props {
     id:number,
     name:string,
-    image:ImagePath,
+    image:Image,
     numberOfItems:number
 }
 
 const { id, name, numberOfItems, image } = Astro.props;
-const imageUrl = image && image.image_path.primary ? image.image_path.primary : '/images/placeholder.png';
+const imageUrl = image && image.image_path && image.image_path.primary ? image.image_path.primary : '/images/placeholder.png';
 ---
 <div class="max-w-sm bg-local border-gray-200 rounded-lg shadow h-64 w-100 dark:bg-gray-800 dark:border-gray-700" style={`background-image: url(${imageUrl});  background-size: cover`}>
     <a href={`/categorias/${name.toLocaleLowerCase()}/1`}>

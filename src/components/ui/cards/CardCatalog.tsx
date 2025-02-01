@@ -4,7 +4,7 @@ import Toast from '@/components/ui/notifications/Toast.tsx';
 import IntCounter from '@/components/utils/IntCounter.tsx';
 import FloatCounter from '@/components/utils/FloatCounter.tsx';
 import ImageWithFallback from '@/components/utils/ImageWithFallback.tsx';
-import type { Image } from '@/types/items.ts';
+import type { Image } from '@/types/images.ts';
 
 type Props = {
     name: string;
@@ -15,7 +15,7 @@ type Props = {
     category: string;
 };
 
-export default function CardCatalog({ name,  price, image, id, unit, category }: Props) {
+export default function CardCatalog({ name,  price, image, id, unit, category } :  Props) {
 
     const [quantity, setQuantity] = useState(1);
     const [showToast, setShowToast] = useState(false);
@@ -24,19 +24,16 @@ export default function CardCatalog({ name,  price, image, id, unit, category }:
     const item: TicketItemDisplayInfo = {
         id: id,
         name: name,
-        price: price,
-        quantity: quantity,
-        imageUrl: image.image_path.primary,
+        price: price || 0,
+        quantity: quantity,   
+        imageUrl: image && image.image_path && image.image_path.primary ? image.image_path.primary : '',
         unit: unit,
-        thumbnail: image.image_path.thumbnail
+        thumbnail: image && image.image_path && image.image_path.thumbnail ? image.image_path.thumbnail : '',
     };
 
     const handleAdd = () => {
         setQuantity(quantity + 1);
     };
-    const { image_path } = image;
-    const { primary } = image_path;
-    
     const handleSubtract = () => {
         if (quantity === 1) return;
         setQuantity(quantity - 1);
@@ -52,15 +49,11 @@ export default function CardCatalog({ name,  price, image, id, unit, category }:
         setLastQuantity(quantity);
         setQuantity(1);
       };
-    
-    const imageUrl = primary;
-
-
 
 
       return (
         <div className="relative item-center w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <ImageWithFallback src={imageUrl} alt={name} defaultSrc="https://muuch-dev.s3.us-east-2.amazonaws.com/media/default/images/default_image.png" />
+          <ImageWithFallback src={item.imageUrl} alt={name} defaultSrc="https://muuch-dev.s3.us-east-2.amazonaws.com/media/default/images/default_image.png" />
           {/* <img className="p-8 rounded-t-lg w-100" src={ imageUrl  } alt="product image"/> */}
           {item.unit === 'KG' && quantity > 0 ? (
             <span className="absolute top-3 right-3 bg-blue-700 text-white px-2 py-2 rounded-full">
@@ -77,7 +70,7 @@ export default function CardCatalog({ name,  price, image, id, unit, category }:
               <div className="flex items-center space-x-1 rtl:space-x-reverse">
                 <p className='text-gray-900 dark:text-white'>{category}</p>
               </div>
-              <span className="text-gray-900 bg-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{unit}</span>
+              <span className="text-gray-900 bg-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{item.unit}</span>
             </div>
             {
                 item.unit === 'KG' ? (
@@ -85,7 +78,7 @@ export default function CardCatalog({ name,  price, image, id, unit, category }:
                         item={item}
                         setQuantity={setQuantity}
                         saveItem={saveItem}
-                        price={price}
+                        price={item.price}
                     />
                 ) : (
                     <IntCounter 
@@ -94,7 +87,7 @@ export default function CardCatalog({ name,  price, image, id, unit, category }:
                         unit={unit}
                         handleAdd={handleAdd}
                         saveItem={saveItem}
-                        price={price}
+                        price={item.price}
                     />
                 )
             }

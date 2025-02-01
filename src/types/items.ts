@@ -1,4 +1,4 @@
-import { type Address } from "@/types/locations";
+import { type Category } from "@/types/categories.ts";
 export interface Items {
     links:        Links;
     start:        number;
@@ -13,15 +13,12 @@ export interface Datum {
     id: string
     name: string
     unit: string
-    category: string
+    category: Category
     price: number
     image: Image
     slug: string
 }
 
-export interface Image {
-    image_path: ImagePath
-}
 
 export interface ImagePath {
     primary: string

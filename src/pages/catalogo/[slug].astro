@@ -1,0 +1,37 @@
+---
+import { fetchItems } from '@/services/items';
+import Layout from "@/layouts/Layout.astro";
+import CardCatalog from '@/components/ui/cards/CardCatalog';
+
+
+export const prerender = true;
+export async function getStaticPaths() {
+    const items = await fetchItems({paginate: false});
+    return items.map((item) => {
+        return {
+            params: { slug: item.slug },
+            props: { item }
+        };
+    });
+}
+
+const { item } = Astro.props;
+
+const title = item?.name || 'Item';
+
+---
+
+<Layout title={title}>
+  <article>
+    <div class="flex justify-center items-center mb-16">
+      <CardCatalog client:visible
+        id={item?.id}
+        name={item?.name}
+        price={item?.price}
+        unit={item?.unit}
+        image={item?.image}
+        category={item?.category}
+    />
+    </div>
+  </article>
+</Layout>

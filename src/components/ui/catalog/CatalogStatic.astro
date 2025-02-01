@@ -10,9 +10,9 @@ const categories = all_categories.slice(0, 6)
 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {categories.map((category) => (
         <CardCategory
-            id={category.id},
-            name={category.name},
-            image={category.image},
+            id={category.id}
+            name={category.name}
+            image={category.image}
             numberOfItems={category.number_of_items}
         />
     ))}

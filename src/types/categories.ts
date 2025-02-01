@@ -12,6 +12,7 @@ export interface Category {
     name:          string;
     number_of_items: number;
     image: ImagePath;
+    slug: string;
 }
 
 export interface ImagePath {
