@@ -1,4 +1,5 @@
 import { type Category } from "@/types/categories.ts";
+import { type Image } from "@/types/images.ts";
 export interface Items {
     links:        Links;
     start:        number;

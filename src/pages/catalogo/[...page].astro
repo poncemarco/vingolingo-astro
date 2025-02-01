@@ -5,6 +5,7 @@ import CardCatalog from '@/components/ui/cards/CardCatalog'
 import Pagination  from '@/components/ui/pagination/Pagination.astro'
 import SectionTitle from '@/components/ui/text/SectionTitle.astro'
 import { type Image } from '@/types/images.ts'
+import type { Category } from '@/types/categories'
 
 export const prerender = true;
 export async function getStaticPaths({ paginate }: { paginate: any }) {
@@ -35,7 +36,7 @@ const { prev, next } = url
 		</div>
 		
 		<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-			{items.map(({id, name, price, image, category, unit}: {id:string, name: string, price: number, image: Image, category: string, unit: string}) => (
+			{items.map(({id, name, price, image, category, unit}: {id:string, name: string, price: number, image: Image, category: Category, unit: string}) => (
 				<CardCatalog 
 					client:visible
 					id={id}
