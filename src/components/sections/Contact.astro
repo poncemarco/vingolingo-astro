@@ -3,32 +3,37 @@ import ContactForm from "@/components/ui/forms/ContactForm.astro"
 import LocationIFrame from "@/components/utils/LocationIFrame.astro"
 import CTALink from "@/components/ui/links/CTALink.astro"
 import WhatsAppIcon from "@/components/ui/icons/social_media/WhatsAppIcon.astro"
+import PhoneIcon from "@/components/ui/icons/contact/PhoneIcon.astro"
 ---
 
 
 <section id="contact" class="bg-white py-20">
-    <div class="container mx-auto">
-        <div class="grid grid-cols-2">
-            <div>
-                <h5 class="text-gray-900 text-4xl text-center py-4 mx-20">Contacto</h5>
+    <div class="container mx-auto ">
+        <div class="grid grid-cols-2 items-start mx-auto">
+            <div class="px-20">
+                <h5 class="text-gray-900 text-4xl text-center py-10">Contacto</h5>
                 <div class="grid grid-cols-2">
-                    <div class="mx-20 items-center">
+                    <div class="text-center items-end justify-end">
                         <CTALink 
-                        title="Envianos un WhatsApp"
+                            title=""
+                            href="tel:+525555555555"
+                        >
+                            <PhoneIcon
+                                slot="icon"
+                                classNameStyles="text-white w-8 h-auto"
+                            />
+                        </CTALink>
+                    </div>
+                    <div class="mx-6 items-start justify-center">
+                        <CTALink 
+                        title=""
                         href="tel:+525555555555"
                     >
                         <WhatsAppIcon
                             slot="icon"
-                            classNameStyles="text-black w-10 h-10"
+                            classNameStyles="text-white w-8 h-auto"
                         />
                     </CTALink>
-                    </div>
-                    <div>
-                        <CTALink 
-                            title="Llámanos"
-                            href="tel:+525555555555"
-                        >
-                        </CTALink>
                     </div>
                 </div>
                 <ContactForm />

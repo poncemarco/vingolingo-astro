@@ -1,6 +1,9 @@
 
 ---
 import { COLOR_PALETTE } from "@/consts/colors.ts"
+import { ContactInfo } from "@/consts/contacts.ts"
+
+const { email, phone, phone_display } = ContactInfo
 
 const { primary_color }= COLOR_PALETTE
 ---
@@ -28,11 +31,14 @@ const { primary_color }= COLOR_PALETTE
                     <h2 class="mb-6 text-sm font-semibold text-gray-100 uppercase dark:text-white">Contáctanos</h2>
                     <ul class="text-gray-200 dark:text-gray-400 font-medium">
                         <li class="mb-4">
-                            <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
+                            <a href={`tel:+52${phone}`} class="hover:underline">Teléfono</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href=`mailto:${email}` class="hover:underline">Mail</a>
                         </li>
                         <li>
-                            <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
-                        </li>
+                            <a href=`https://wa.me/52${phone}`>Whatsapp</a>
+                        </li> 
                     </ul>
                 </div>
                 <div>
@@ -58,7 +64,7 @@ const { primary_color }= COLOR_PALETTE
         </div>
         <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="text-sm text-gray-200 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+            <span class="text-sm text-gray-200 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">Vingolingo</a>. Todos los derechos reservados.
             </span>
         </div>
     </div>
