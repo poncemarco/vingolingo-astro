@@ -4,19 +4,10 @@ import Toast from '@/components/ui/notifications/Toast.tsx';
 import IntCounter from '@/components/utils/IntCounter.tsx';
 import FloatCounter from '@/components/utils/FloatCounter.tsx';
 import ImageWithFallback from '@/components/utils/ImageWithFallback.tsx';
-import type { Image } from '@/types/images.ts';
-import type { Category } from '@/types/categories.ts';
+import type { Datum } from '@/types/items.ts';
 
-type Props = {
-    name: string;
-    price: number;
-    image: Image;
-    id: string;
-    unit: string;
-    category: Category;
-};
 
-export default function CardCatalog({ name,  price, image, id, unit, category } :  Props) {
+export default function CardCatalog({ name,  price, image, id, unit, category } : Datum ) {
 
     const [quantity, setQuantity] = useState(1);
     const [showToast, setShowToast] = useState(false);
@@ -69,7 +60,7 @@ export default function CardCatalog({ name,  price, image, id, unit, category } 
             <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h2>
             <div className="flex items-center mt-2.5 mb-5">
               <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                <p className='text-gray-900 dark:text-white'>{category.name}</p>
+                <p className='text-gray-900 dark:text-white'>{category}</p>
               </div>
               <span className="text-gray-900 bg-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{item.unit}</span>
             </div>

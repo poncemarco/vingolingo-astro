@@ -3,13 +3,21 @@ import { SITE_URL } from '@/consts/https';
 import type { Category } from '@/types/categories'
 
 export const fetchItems = async (
-    { pageSize = "25", paginate = true }: 
+    { 
+        pageSize = "25", 
+        paginate = true,
+        categories = []
+    }: 
     { 
         pageSize?: string ,
-        paginate?: boolean 
-
+        paginate?: boolean,
+        categories?: string[]
     }) => {
-    const queryParameter = paginate ? `?page_size=${pageSize}` : '?paginate=false'
+    let queryParameter = ``
+    const paginateParameter = paginate ? `?page_size=${pageSize}` : '?paginate=false'
+    const categoryOptions = categories ? categories.join(',') : ''
+    const categoriesParameter = categories ? `&category=${categoryOptions}` : ''
+    queryParameter = categoriesParameter ? `${paginateParameter}${categoriesParameter}` : paginateParameter
     try {
         const res = await fetch(`${SITE_URL}/api/v1/items/${queryParameter}`)
         const resJson = await res.json()

@@ -15,7 +15,7 @@ export function MultiItemCarousel() {
     const [items, setItems] = React.useState([] as Datum[]);
 
     async function getItems() {
-        const items = await fetchItems({ pageSize: "10" });
+        const items = await fetchItems({ pageSize: "10", categories: ["Desechable"] });
         return items;
     }
 
