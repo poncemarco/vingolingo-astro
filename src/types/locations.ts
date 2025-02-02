@@ -27,20 +27,10 @@ export interface Address {
     neighborhood: string;
     complement: string;
     postalCode: string;
-  }
+}
 
 export interface AddressFormProps {
     address: {
-      street: string;
-      city: string;
-      state: string;
-      county: string;
-      neighborhood: string;
-      complement: string;
-      postalCode: string;
-    };
-    setAddress: React.Dispatch<
-      React.SetStateAction<{
         street: string;
         city: string;
         state: string;
@@ -48,9 +38,19 @@ export interface AddressFormProps {
         neighborhood: string;
         complement: string;
         postalCode: string;
-      }>
+    };
+    setAddress: React.Dispatch<
+        React.SetStateAction<{
+            street: string;
+            city: string;
+            state: string;
+            county: string;
+            neighborhood: string;
+            complement: string;
+            postalCode: string;
+        }>
     >;
-  }
+}
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
