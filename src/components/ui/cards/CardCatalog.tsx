@@ -57,7 +57,7 @@ export default function CardCatalog({ name,  price, image, id, unit, category } 
             </span>
           )}
           <div className="px-5 pb-5">
-            <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h2>
+            <h4 className="text-xl h-12 font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h4>
             <div className="flex items-center mt-2.5 mb-5">
               <div className="flex items-center space-x-1 rtl:space-x-reverse">
                 <p className='text-gray-900 dark:text-white'>{category}</p>

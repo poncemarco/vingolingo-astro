@@ -44,7 +44,7 @@ export function MultiItemCarousel() {
                             key={index}
                             className='md:basis-1/3 lg:basis-1/5 sm:basis-1/2'    
                         >
-                            <div className='p-1'>
+                            <div className='p-1 h-4/6 w-full'>
                                 <CardCatalog
                                     {...item}
                                 />
