@@ -19,9 +19,9 @@
     >
     <div>
         <p id="searchReadout" class="dark:text-white my-2"></p>
-        <section>
+        <div class="absolute y-0 z-10 w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg">
             <ul id="searchResults" class="dark:bg-gray-800 dark:text-white"></ul>
-        </section>
+        </div>
     </div>
 </div>
 
@@ -105,17 +105,14 @@
                 FUSE_CATEGORY_INSTANCE = new Fuse(SEARCH_CATEGORY_DATA, FUSE_CATEGORY_OPTIONS);
             }
             if (!FUSE_INSTANCE) return;
-            console.log("search", search);
             const searchResult = FUSE_INSTANCE.search(search);
             const categoryResult = FUSE_CATEGORY_INSTANCE.search(search);
-            console.log("searchResult", searchResult);
             const items = searchResult.map((result : any) => result.item);
             const categories = categoryResult.map((result : any) => result.item);
             const results = {
                 items: items as Datum[],
                 categories: categories as Category[],
             }
-            console.log("results", results);
             resultsList.innerHTML =
                 searchResult.length > 0
                 ? generateSearchList(results)
@@ -125,14 +122,12 @@
             document.title = search ? `Resultados de búsqueda para: ${search}` : 'Búsqueda de productos';
         }
         function updateSearchReadout(search : URLSearchParams | any) {
-            console.log(search);
             searchReadout.textContent = search
             ? `Resultados de búsqueda para: ${search}`
             : 'Busca productos';
         }
         function setLocalSearchData(search: string) {
             const actualLocalSearch = localStorage.getItem('search');
-            console.log(actualLocalSearch);
             if (actualLocalSearch !== search) {
                 localStorage.setItem('search', search);
                 return true;
@@ -147,7 +142,7 @@
             search.placeholder = 'Busca por producto, categoria o marca';
         }
         searchReadout.textContent = localStorage.getItem('search') ? `Resultados de búsqueda para: ${localStorage.getItem('search')}` : '';
-        console.log(searchReadout.textContent);
+
         //listeners
 
         window.addEventListener("DOMContentLoaded", () => {
@@ -172,7 +167,6 @@
         });
         search.addEventListener("input", () => {
             const searchInput = DOMPurify.sanitize(search.value);
-            console.log(searchInput);
             const update = setLocalSearchData(searchInput);
             if (!update) return;
             const searchTerm = searchInput;
@@ -181,7 +175,6 @@
                 searchReadout.innerHTML = "";
                 return;
             }
-            console.log("searchTerm",searchTerm);
             updateDocumentTitle(searchTerm);
             updateSearchReadout(searchTerm);
             fetchSearchResults(searchTerm);

@@ -14,7 +14,7 @@ export interface Datum {
     id: string
     name: string
     unit: string
-    category: Category
+    category: string
     price: number
     image: Image
     slug: string

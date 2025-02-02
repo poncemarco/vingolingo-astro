@@ -12,12 +12,12 @@ export const fetchItems = async (
     const queryParameter = paginate ? `?page_size=${pageSize}` : '?paginate=false'
     try {
         const res = await fetch(`${SITE_URL}/api/v1/items/${queryParameter}`)
-        try {
-            const { results: data } = await res.json() as Items
-            return data
-        } catch (error) {
-            const data = await res.json() as Datum[]
-            return data
+        const resJson = await res.json()
+        if (resJson.results) {
+            return resJson.results as Datum[]
+        }
+        else {
+            return resJson as Datum[]
         }
     }
     catch (error) {

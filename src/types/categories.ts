@@ -1,22 +1,11 @@
-// To parse this data:
-//
-//   import { Convert } from "./file";
-//
-//   const categories = Convert.toCategories(json);
-//
-// These functions will throw an error if the JSON doesn't
-// match the expected interface, even if the JSON is valid.
+import type { Image } from '@/types/images';
 
 export interface Category {
     id:            number;
     name:          string;
     number_of_items: number;
-    image: ImagePath;
+    image: Image;
     slug: string;
-}
-
-export interface ImagePath {
-    image_path:   Primary;
 }
 
 export interface Primary {
