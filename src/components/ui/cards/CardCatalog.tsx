@@ -1,71 +1,87 @@
 import { type TicketItemDisplayInfo, addTicketItem } from '@/stores/ticketStore.ts';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Toast from '@/components/ui/notifications/Toast.tsx';
 import IntCounter from '@/components/utils/IntCounter.tsx';
 import FloatCounter from '@/components/utils/FloatCounter.tsx';
 import ImageWithFallback from '@/components/utils/ImageWithFallback.tsx';
 import type { Datum } from '@/types/items.ts';
+import { getTicketItems } from '@/stores/ticketStore.ts';
 
-
-export default function CardCatalog({ name,  price, image, id, unit, category } : Datum ) {
-
-    const [quantity, setQuantity] = useState(1);
+export default function CardCatalog({ name, price, image, id, unit, category, slug }: Datum) {
+    const [quantity, setQuantity] = useState(0);
     const [showToast, setShowToast] = useState(false);
-    const [lastQuantity, setLastQuantity] = useState(0);
-    
-    const item: TicketItemDisplayInfo = {
+    const [lastQuantity, setLastQuantity] = useState(1);
+    const [item, setItem] = useState<TicketItemDisplayInfo>({
         id: id,
         name: name,
-        price: price || 0,
-        quantity: quantity,   
+        price: price ? price : 0,
+        quantity: quantity,
         imageUrl: image && image.image_path && image.image_path.primary ? image.image_path.primary : '',
-        unit: unit,
         thumbnail: image && image.image_path && image.image_path.thumbnail ? image.image_path.thumbnail : '',
-    };
+        unit: unit,
+    });
+
 
     const handleAdd = () => {
         setQuantity(quantity + 1);
     };
+
     const handleSubtract = () => {
-        if (quantity === 1) return;
+        if (quantity === 0) return;
         setQuantity(quantity - 1);
     };
 
     const saveItem = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        if (quantity === 0) {
-          setQuantity(quantity + 1);
+      e.preventDefault();
+
+      if (quantity === 0) {
+          setQuantity(1);
+          return;
+      }
+      setItem((prevItem) => {
+          const updatedItem = {
+              ...prevItem,
+              quantity: quantity, // Usamos el valor actualizado de `quantity`
+          };
+  
+          // Llamamos a `addTicketItem` con el valor actualizado
+          addTicketItem(updatedItem);
+  
+          // Mostramos el Toast
+          setShowToast(true);
+          setLastQuantity(quantity);
+  
+          return updatedItem;
+      });
+  };
+
+    const updateFromTicket = () => {
+        const itemInTicket = getTicketItems(id);
+        if (itemInTicket) {
+            setQuantity(itemInTicket.quantity);
         }
-        setShowToast(true);
-        addTicketItem(item);
-        setLastQuantity(quantity);
-        setQuantity(1);
-      };
+    };
 
+    useEffect(() => {
+        updateFromTicket();
+    }, []);
 
-      return (
+    return (
         <div className="relative item-center w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <ImageWithFallback src={item.imageUrl} alt={name} defaultSrc="https://muuch-dev.s3.us-east-2.amazonaws.com/media/default/images/default_image.png" />
-          {/* <img className="p-8 rounded-t-lg w-100" src={ imageUrl  } alt="product image"/> */}
-          {item.unit === 'KG' && quantity > 0 ? (
-            <span className="absolute top-3 right-3 bg-blue-700 text-white px-2 py-2 rounded-full">
-              {quantity} KGS
-            </span>
-          ) :  quantity > 1 && (
-            <span className="absolute top-3 right-3 bg-blue-700 text-white px-2 py-2 rounded-full">
-              {quantity} 
-            </span>
-          )}
-          <div className="px-5 pb-5">
-            <h4 className="text-xl h-12 font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h4>
-            <div className="flex items-center mt-2.5 mb-5">
-              <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                <p className='text-gray-900 dark:text-white'>{category}</p>
-              </div>
-              <span className="text-gray-900 bg-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{item.unit}</span>
-            </div>
-            {
-                item.unit === 'KG' ? (
+            <ImageWithFallback
+                src={item.imageUrl}
+                alt={name}
+                defaultSrc="https://muuch-dev.s3.us-east-2.amazonaws.com/media/default/images/default_image.png"
+            />
+            <div className="px-5 pb-5">
+                <h4 className="text-xl h-12 font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h4>
+                <div className="flex items-center mt-2.5 mb-5">
+                    <div className="flex items-center space-x-1 rtl:space-x-reverse">
+                        <p className='text-gray-900 dark:text-white'>{category}</p>
+                    </div>
+                    <span className="text-gray-900 bg-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{item.unit}</span>
+                </div>
+                {item.unit === 'KG' ? (
                     <FloatCounter
                         item={item}
                         setQuantity={setQuantity}
@@ -73,7 +89,7 @@ export default function CardCatalog({ name,  price, image, id, unit, category } 
                         price={item.price}
                     />
                 ) : (
-                    <IntCounter 
+                    <IntCounter
                         handleSubtract={handleSubtract}
                         quantity={quantity}
                         unit={unit}
@@ -81,13 +97,11 @@ export default function CardCatalog({ name,  price, image, id, unit, category } 
                         saveItem={saveItem}
                         price={item.price}
                     />
-                )
-            }
-            
-          </div>
-          {showToast && (
-            <Toast name={name} quantity={lastQuantity} itsKg={unit === "KG"}/>
-          )}
+                )}
+            </div>
+            {showToast && (
+                <Toast name={name} quantity={lastQuantity} itsKg={unit === "KG"} />
+            )}
         </div>
-      );
-    };
+    );
+}
