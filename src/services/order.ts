@@ -35,17 +35,18 @@ export const sendOrder = async (order : Order): Promise<OrderResponse> => {
         if (!res.ok) {
             return {
                 success: false,
-                id: null,
+                id: "",
                 discount: null,
             }
         }
 
         const response = await res.json();
+        console.log(response);
         const orderResponse: OrderResponse = {
             success: true,
-            id: response.id,
+            id: response.preference_id,
             discount: response.discount,
         };
+        console.log(orderResponse);
         return orderResponse;
-        
     };

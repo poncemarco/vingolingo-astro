@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
@@ -13,5 +13,13 @@ export default defineConfig({
     react(), 
     tailwind({
       applyBaseStyles: false
-    })]
+    })],
+  env: {
+    schema: {
+      MERCADO_PAGO_PUBLIC_KEY: envField.string({ 
+        context: 'client',
+        access: 'public',
+      }),
+    }
+  }
 });

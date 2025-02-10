@@ -19,7 +19,7 @@ export interface Order {
 
 export interface OrderResponse {
     success: boolean;
-    id?: number | null;
+    id: string;
     discount?: number | null;
 }
 
