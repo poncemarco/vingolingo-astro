@@ -1,5 +1,5 @@
 ---
-import '../styles/globals.css'
+import '@/styles/globals.css'
 import Navbar from '@/components/layout/Navbar.astro'
 import Header from '@/components/layout/Header.astro'
 import Footer from '@/components/layout/Footer.astro'
@@ -37,13 +37,10 @@ import { ClientRouter } from 'astro:transitions';
 	</head>
 	<body>
 		<Header>
-			<slot>
-				<Navbar transition:persist/>
-			</slot>
+			<Navbar slot="navbar" transition:persist/>
 		</Header>
 
-		<Navbar />
-			<slot />
+		<slot />
 		<Footer />
 	</body>
 </html>
