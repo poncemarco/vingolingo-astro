@@ -6,14 +6,15 @@ import WhatsAppIcon from "@/components/ui/icons/social_media/WhatsAppIcon.astro"
 import PhoneIcon from "@/components/ui/icons/contact/PhoneIcon.astro"
 ---
 
-
 <section id="contact" class="bg-white py-20">
-    <div class="container mx-auto ">
-        <div class="grid grid-cols-2 items-start mx-auto">
-            <div class="px-20">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <!-- Columna izquierda: Formulario y botones de contacto -->
+            <div class="px-4 md:px-20">
                 <h5 class="text-gray-900 text-4xl text-center py-10">Contacto</h5>
-                <div class="grid grid-cols-2">
-                    <div class="text-center items-end justify-end">
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Botón de teléfono -->
+                    <div class="text-center">
                         <CTALink 
                             title=""
                             href="tel:+525555555555"
@@ -24,24 +25,29 @@ import PhoneIcon from "@/components/ui/icons/contact/PhoneIcon.astro"
                             />
                         </CTALink>
                     </div>
-                    <div class="mx-6 items-start justify-center">
+                    <!-- Botón de WhatsApp -->
+                    <div class="text-center">
                         <CTALink 
-                        title=""
-                        href="tel:+525555555555"
-                    >
-                        <WhatsAppIcon
-                            slot="icon"
-                            classNameStyles="text-white w-8 h-auto"
-                        />
-                    </CTALink>
+                            title=""
+                            href="https://wa.me/525555555555"
+                        >
+                            <WhatsAppIcon
+                                slot="icon"
+                                classNameStyles="text-white w-8 h-auto"
+                            />
+                        </CTALink>
                     </div>
                 </div>
+                <!-- Formulario de contacto -->
                 <ContactForm />
             </div>
-            <div class="mx-20 w-full h-auto">
-                <LocationIFrame />
+
+            <!-- Columna derecha: Mapa (iframe) -->
+            <div class="px-4 md:px-20 w-full h-[400px] md:h-auto">
+                <div class="w-full h-full overflow-hidden rounded-lg shadow-lg">
+                    <LocationIFrame class="w-full h-full" />
+                </div>
             </div>
         </div>
     </div>
-
 </section>

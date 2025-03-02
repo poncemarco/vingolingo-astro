@@ -1,48 +1,59 @@
 ---
 import { COLOR_PALETTE } from "@/consts/colors.ts"
-
-const { primary_color }= COLOR_PALETTE
-import NavbarDesktop from "@/components//ui/navbar/NavbarDesktop.astro"
+const { primary_color } = COLOR_PALETTE
+import NavbarDesktop from "@/components/ui/navbar/NavbarDesktop.astro"
 import NavbarMobile from "@/components/ui/navbar/NavbarMobile.astro"
 ---
-<style define:vars={{
-    primary_color
-}}>
+
+<style define:vars={{ primary_color }}>
     nav {
         background-color: var(--primary_color);
     }
+    
+    /* Estado inicial para mobile-first */
+    #desktop-navbar { display: none; }
+    #mobile-navbar { display: block; }
+
+    @media (min-width: 769px) {
+        #desktop-navbar { display: block; }
+        #mobile-navbar { display: none; }
+    }
 </style>
 
-
-<nav class="bg-primary"> 
+<nav class="bg-primary">
     <div id="desktop-navbar">
         <NavbarDesktop />
     </div>
-    <!-- <div id="mobile-navbar">
+    <div id="mobile-navbar">
         <NavbarMobile />
-    </div> -->
+    </div>
 </nav>
 
-<script>
-    const desktopNavbar = document.getElementById("desktop-navbar") as HTMLElement | null;
-    const mobileNavbar = document.getElementById("mobile-navbar") as HTMLElement | null;
-
-    function handleResize(): void {
-        if (!desktopNavbar || !mobileNavbar) {
-            console.error("Navbar elements not found");
-            return;
+<script is:inline>
+    // Selección de elementos sin TypeScript
+    const desktopNavbar = document.getElementById('desktop-navbar');
+    const mobileNavbar = document.getElementById('mobile-navbar');
+    
+    function handleResize() {
+        const isDesktop = window.innerWidth > 768;
+        
+        if (desktopNavbar) {
+            desktopNavbar.style.display = isDesktop ? 'block' : 'none';
         }
-
-        if (window.innerWidth > 768) {
-            desktopNavbar.style.display = "block";
-            mobileNavbar.style.display = "none";
-        } else {
-            desktopNavbar.style.display = "none";
-            mobileNavbar.style.display = "block";
+        
+        if (mobileNavbar) {
+            mobileNavbar.style.display = isDesktop ? 'none' : 'block';
         }
     }
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
+    // Configuración inicial
+    if (typeof window !== 'undefined') {
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        
+        // Limpieza para frameworks SPA
+        window.addEventListener('beforeunload', () => {
+            window.removeEventListener('resize', handleResize);
+        });
+    }
 </script>
-
