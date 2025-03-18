@@ -1,5 +1,6 @@
 ---
-import ContactForm from "@/components/ui/forms/ContactForm.astro"
+// import ContactForm from "@/components/ui/forms/ContactForm.astro"
+import Contacts from "../ui/contact/Contacts.astro"
 import LocationIFrame from "@/components/utils/LocationIFrame.astro"
 import CTALink from "@/components/ui/links/CTALink.astro"
 import WhatsAppIcon from "@/components/ui/icons/social_media/WhatsAppIcon.astro"
@@ -9,37 +10,13 @@ import PhoneIcon from "@/components/ui/icons/contact/PhoneIcon.astro"
 <section id="contact" class="bg-white py-20">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <!-- Columna izquierda: Formulario y botones de contacto -->
+            <!-- Columna izquierda: Contacto -->
             <div class="px-4 md:px-20">
                 <h5 class="text-gray-900 text-4xl text-center py-10">Contacto</h5>
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- Botón de teléfono -->
-                    <div class="text-center">
-                        <CTALink 
-                            title=""
-                            href="tel:+525555555555"
-                        >
-                            <PhoneIcon
-                                slot="icon"
-                                classNameStyles="text-white w-8 h-auto"
-                            />
-                        </CTALink>
-                    </div>
-                    <!-- Botón de WhatsApp -->
-                    <div class="text-center">
-                        <CTALink 
-                            title=""
-                            href="https://wa.me/525555555555"
-                        >
-                            <WhatsAppIcon
-                                slot="icon"
-                                classNameStyles="text-white w-8 h-auto"
-                            />
-                        </CTALink>
-                    </div>
+                <!-- Contenedor centrado para el componente Contacts -->
+                <div class="flex justify-center items-center">
+                    <Contacts />
                 </div>
-                <!-- Formulario de contacto -->
-                <ContactForm />
             </div>
 
             <!-- Columna derecha: Mapa (iframe) -->

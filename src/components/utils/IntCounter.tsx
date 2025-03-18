@@ -21,7 +21,6 @@ const IntCounter = ({ handleSubtract, handleAdd, saveItem, price, quantity, unit
 
   const addAndSave = (event : React.MouseEvent<HTMLButtonElement>) => {
       handleAdd();
-      console.log("quantity", quantity);
       saveItem(event);
     }
   const subtractAndSave = (event : React.MouseEvent<HTMLButtonElement>) => {

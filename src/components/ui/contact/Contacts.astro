@@ -1,0 +1,67 @@
+---
+import WhatsAppIcon from "../icons/social_media/WhatsAppIcon.astro"
+import { ContactInfo } from "@/consts/contacts";
+import { Icon } from 'astro-icon/components'
+---
+
+
+
+<ul role="list" class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700">
+    <li class="py-3 sm:py-4">
+        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+            <div class="shrink-0">
+                <WhatsAppIcon classNameStyles="text-white w-8 h-auto"/>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                    WhatsApp
+                </p>
+                <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                    {ContactInfo.phoneDisplay}
+                </p>
+            </div>
+            <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                Mandar mensaje
+            </span>
+        </div>
+    </li>
+    <li class="py-3 sm:py-4">
+        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+            <div class="shrink-0">
+                <Icon name="contact/envelope-regular" class="text-black w-8 h-auto"/>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                    Correo
+                </p>
+                <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                    {ContactInfo.email}
+                </p>
+            </div>
+            <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                Enviar correo
+            </span>
+        </div>
+    </li>
+    <li class="py-3 sm:py-4">
+        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+            <div class="shrink-0">
+                <Icon name="contact/phone-volume-solid" class="text-black w-8 h-auto"/>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                    Teléfono
+                </p>
+                <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                    {ContactInfo.phoneDisplay}
+                </p>
+            </div>
+            <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                Llámanos
+            </span>
+        </div>
+    </li>
+</ul>

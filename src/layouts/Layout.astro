@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar.astro'
 import Header from '@/components/layout/Header.astro'
 import Footer from '@/components/layout/Footer.astro'
 import { ClientRouter } from 'astro:transitions';
+import FloatingWhatsappButton from '@/components/ui/buttons/FloatingWhatsappButton.astro';
 ---
 
 <script is:inline>
@@ -11,7 +12,7 @@ import { ClientRouter } from 'astro:transitions';
 		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
 			return localStorage.getItem('theme');
 		}
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'light';
 	};
 	const isDark = getThemePreference() === 'dark';
 	document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
@@ -41,6 +42,10 @@ import { ClientRouter } from 'astro:transitions';
 		</Header>
 
 		<slot />
+		<FloatingWhatsappButton 
+			phoneNumber='5225322808'
+			message='¡Hola! Tengo una duda sobre...'
+		/>
 		<Footer />
 	</body>
 </html>

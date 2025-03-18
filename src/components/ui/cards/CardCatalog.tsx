@@ -32,28 +32,25 @@ export default function CardCatalog({ name, price, image, id, unit, category, sl
     };
 
     const saveItem = (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
+        e.preventDefault();
+        const updatedQuantity = quantity === 0 ? 1 : quantity;
+        if (quantity === 0) {
+            setQuantity(1);
+        }
+        setItem((prevItem) => {
+            const updatedItem = {
+                ...prevItem,
+                quantity: updatedQuantity,
+            };
 
-      if (quantity === 0) {
-          setQuantity(1);
-          return;
-      }
-      setItem((prevItem) => {
-          const updatedItem = {
-              ...prevItem,
-              quantity: quantity, // Usamos el valor actualizado de `quantity`
-          };
-  
-          // Llamamos a `addTicketItem` con el valor actualizado
-          addTicketItem(updatedItem);
-  
-          // Mostramos el Toast
-          setShowToast(true);
-          setLastQuantity(quantity);
-  
-          return updatedItem;
-      });
-  };
+            addTicketItem(updatedItem);
+
+            setShowToast(true);
+            setLastQuantity(updatedQuantity);
+
+            return updatedItem;
+            });
+    };
 
     const updateFromTicket = () => {
         const itemInTicket = getTicketItems(id);

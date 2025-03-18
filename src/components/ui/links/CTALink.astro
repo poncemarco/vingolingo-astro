@@ -10,7 +10,7 @@ const { title, href } = Astro.props;
 
 ---
 <div>
-    <a href={href} class="inline-flex items-center justify-center p-5 text-base font-medium text-white rounded-lg bg-gray-50 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
+    <a href={href} class="inline-flex items-center justify-center p-5 text-base font-medium text-gray-900 rounded-lg bg-gray-50 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
         <span >{title}</span>
         <slot name="icon"/>
     </a>

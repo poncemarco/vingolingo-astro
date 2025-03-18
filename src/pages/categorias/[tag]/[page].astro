@@ -41,20 +41,22 @@ const { prev, next } = url;
 	title={`Categoría: ${params.tag}`}
 	description=`${total} productos disponibles`
 	/>
-	<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-		{items.map(({id, name, price, image, category, unit}: {id:string, name: string, price: number, image: Image, category: string, unit: string}) => (
-			<CardCatalog 
-				client:visible
-				id={id}
-				name={name}
-				price={price}
-				image={image}
-				unit={unit}
-				category={category}
-        slug={`/producto/${id}`}
-			/>
-		))}
-	</div>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map(({id, name, price, image, category, unit}: {id:string, name: string, price: number, image: Image, category: string, unit: string}) => (
+        <CardCatalog 
+          client:visible
+          id={id}
+          name={name}
+          price={price}
+          image={image}
+          unit={unit}
+          category={category}
+          slug={`/producto/${id}`}
+        />
+      ))}
+    </div>
+  </div>
 	<div class="mt-12 grid place-content-center dark:text-gray-200"> <!-- Cambiado a 5 columnas -->
         <Pagination
           firstPage={prev ? '/catorias/listas' : null}
