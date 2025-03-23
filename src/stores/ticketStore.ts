@@ -26,24 +26,17 @@ export function getTicketItems(id : string) {
 }
 
 
-export function addTicketItem({ id, name, quantity, price, imageUrl, thumbnail, unit }: TicketItem) {
-    const existingEntry = getTicketItems(id);
-    if (existingEntry) {
-        ticketItems.setKey(id, {
-            ...existingEntry,
-            quantity: quantity, // Actualiza la cantidad con el valor proporcionado
-        });
-    } else {
-        ticketItems.setKey(id, {
-            id,
-            name,
-            price,
-            quantity: quantity, // Usa el valor de `quantity` proporcionado
-            imageUrl,
-            thumbnail,
-            unit,
-        });
-    }
+// ticketStore.ts
+export function addTicketItem(item: TicketItem) {
+    const existing = ticketItems.get()[item.id];
+    
+    const newItem = existing 
+        ? { ...existing, quantity: item.quantity }
+        : item;
+
+    ticketItems.setKey(item.id, newItem);
+    
+    return newItem; // Devuelve el item actualizado
 }
 
 export function removeTicketItem(id: string) {
