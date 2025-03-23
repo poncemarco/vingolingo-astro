@@ -1,58 +1,12 @@
 ---
-import { COLOR_PALETTE } from "@/consts/colors.ts"
-const { primary_color } = COLOR_PALETTE
 import NavbarDesktop from "@/components/ui/navbar/NavbarDesktop.astro"
 import NavbarMobile from "@/components/ui/navbar/NavbarMobile.astro"
 ---
-
-<style define:vars={{ primary_color }}>
-    nav {
-        background-color: var(--primary_color);
-    }
-    
-    #desktop-navbar { display: none; }
-    #mobile-navbar { display: block; }
-
-    @media (min-width: 769px) {
-        #desktop-navbar { display: block; }
-        #mobile-navbar { display: none; }
-    }
-</style>
-
 <nav class="bg-primary">
-    <div id="desktop-navbar">
+    <div id="desktop-navbar" class="hidden sm:block">
         <NavbarDesktop />
     </div>
-    <div id="mobile-navbar">
+    <div id="mobile-navbar" class="sm:hidden">
         <NavbarMobile />
     </div>
 </nav>
-
-<script is:inline>
-    // Selección de elementos sin TypeScript
-    const desktopNavbar = document.getElementById('desktop-navbar');
-    const mobileNavbar = document.getElementById('mobile-navbar');
-    
-    function handleResize() {
-        const isDesktop = window.innerWidth > 768;
-        
-        if (desktopNavbar) {
-            desktopNavbar.style.display = isDesktop ? 'block' : 'none';
-        }
-        
-        if (mobileNavbar) {
-            mobileNavbar.style.display = isDesktop ? 'none' : 'block';
-        }
-    }
-
-    // Configuración inicial
-    if (typeof window !== 'undefined') {
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        
-        // Limpieza para frameworks SPA
-        window.addEventListener('beforeunload', () => {
-            window.removeEventListener('resize', handleResize);
-        });
-    }
-</script>

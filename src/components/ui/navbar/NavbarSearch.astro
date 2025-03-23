@@ -1,5 +1,4 @@
 <div class="text-gray-900 flex-row justify-center cursor-pointer hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-110 hover:text-white scale-90 gap-x-2 opacity-90 hover:opacity-100 dark:dark:text-gray-100 relative">
-    
     <input 
         type="search" 
         id="search" 
@@ -16,170 +15,16 @@
 </div>
 
 <script>
-    import DOMPurify from 'dompurify';
-    import Fuse, { type IFuseOptions } from 'fuse.js'; // Importar Fuse y IFuseOptions
-    import { generateSearchList } from '@/components/utils/SearchList';
-    import { SPINNER } from '@/components/ui/loaders/spinner.ts';
-    import type { Datum } from '@/types/items';
-    import type { Category } from '@/types/categories';
+    import { initializeSearch } from '@/components/utils/searchLogic';
 
     document.addEventListener('astro:page-load', () => {
-        // Elementos del DOM
         const searchInput = document.getElementById('search') as HTMLInputElement;
         const searchReadout = document.getElementById('searchReadout') as HTMLParagraphElement;
         const resultsList = document.getElementById('searchResults') as HTMLUListElement;
         const resultsContainer = document.getElementById('resultsContainer') as HTMLDivElement;
-
-        // Variables
-        let SEARCH_DATA: Datum[];
-        let SEARCH_CATEGORY_DATA: Category[];
-        let FUSE_INSTANCE: Fuse<Datum>; // Usar Fuse<Datum> para tipar la instancia
-        let FUSE_CATEGORY_INSTANCE: Fuse<Category>; // Usar Fuse<Category> para tipar la instancia
-
-        // Opciones de Fuse.js
-        const FUSE_OPTIONS: IFuseOptions<Datum> = { // Usar IFuseOptions<Datum>
-            includeScore: true,
-            shouldSort: true,
-            keys: [
-                { name: 'name', weight: 0.7 },
-                { name: 'category', weight: 0.5 },
-                { name: 'unit', weight: 0.3 },
-            ],
-            threshold: 0.5,
-        };
-
-        const FUSE_CATEGORY_OPTIONS: IFuseOptions<Category> = { // Usar IFuseOptions<Category>
-            includeScore: true,
-            shouldSort: true,
-            keys: [{ name: 'name', weight: 0.5 }],
-            threshold: 0.5,
-        };
-
-        // Funciones
-        function updateSearchPageURL(search: string): void {
-            const url = new URL(window.location.href);
-            url.searchParams.set('q', search);
-            window.history.replaceState(null, '', url.toString());
+        
+        if (searchInput && searchReadout && resultsList && resultsContainer) {
+            initializeSearch(searchInput, searchReadout, resultsList, resultsContainer);
         }
-
-        async function fetchSearchResults(search: string): Promise<void> {
-            if (search.length === 0) {
-                resultsList.innerHTML = '';
-                searchReadout.textContent = '';
-                resultsContainer.classList.add('hidden');
-                return;
-            }
-
-            resultsList.innerHTML = SPINNER;
-            resultsContainer.classList.remove('hidden');
-
-            if (!SEARCH_DATA) {
-                try {
-                    const res = await fetch('/items.json');
-                    if (!res.ok) {
-                        throw new Error('Something went wrong…please try again');
-                    }
-                    const data = await res.json();
-                    SEARCH_DATA = data.items as Datum[];
-                    SEARCH_CATEGORY_DATA = data.categories as Category[];
-                } catch (e) {
-                    console.error(e);
-                }
-            }
-
-            if (SEARCH_DATA && !FUSE_INSTANCE) {
-                FUSE_INSTANCE = new Fuse(SEARCH_DATA, FUSE_OPTIONS);
-                FUSE_CATEGORY_INSTANCE = new Fuse(SEARCH_CATEGORY_DATA, FUSE_CATEGORY_OPTIONS);
-            }
-
-            if (!FUSE_INSTANCE) return;
-
-            const searchResult = FUSE_INSTANCE.search(search);
-            const categoryResult = FUSE_CATEGORY_INSTANCE.search(search);
-            const items = searchResult.map((result) => result.item);
-            const categories = categoryResult.map((result) => result.item);
-
-            const results = {
-                items: items as Datum[],
-                categories: categories as Category[],
-            };
-
-            resultsList.innerHTML =
-                searchResult.length > 0
-                    ? generateSearchList(results)
-                    : "<li class='text-center text-gray-500 dark:text-gray-400'>No se encontraron resultados</li>";
-        }
-
-        function updateDocumentTitle(search: string): void {
-            document.title = search ? `Resultados de búsqueda para: ${search}` : 'Búsqueda de productos';
-        }
-
-        function updateSearchReadout(search: string): void {
-            searchReadout.textContent = search
-                ? `Resultados de búsqueda para: ${search}`
-                : 'Busca productos';
-        }
-
-        function setLocalSearchData(search: string): boolean {
-            const actualLocalSearch = localStorage.getItem('search');
-            if (actualLocalSearch !== search) {
-                localStorage.setItem('search', search);
-                return true;
-            }
-            return false;
-        }
-
-        // Inicialización
-        const storedSearch = localStorage.getItem('search');
-        searchInput.placeholder =
-            storedSearch && storedSearch !== '' ? storedSearch : 'Busca por producto, categoría o marca';
-        searchReadout.textContent = storedSearch
-            ? `Resultados de búsqueda para: ${storedSearch}`
-            : '';
-
-        // Eventos
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = DOMPurify.sanitize(
-                new URLSearchParams(window.location.search).get('q') as string
-            );
-            updateDocumentTitle(urlParams);
-            updateSearchReadout(urlParams);
-            searchInput.value = urlParams ?? '';
-        });
-
-        searchInput.addEventListener('focus', () => {
-            const actualLocalSearch = localStorage.getItem('search');
-            if (actualLocalSearch) {
-                searchInput.value = actualLocalSearch;
-                const searchTerm = DOMPurify.sanitize(searchInput.value);
-                updateDocumentTitle(searchTerm);
-                updateSearchReadout(searchTerm);
-                fetchSearchResults(searchTerm);
-                updateSearchPageURL(searchTerm);
-            }
-        });
-
-        searchInput.addEventListener('input', () => {
-            const searchInputValue = DOMPurify.sanitize(searchInput.value);
-            const update = setLocalSearchData(searchInputValue);
-
-            if (searchInputValue.length === 0) {
-                searchInput.placeholder = 'Busca por producto, categoría o marca';
-                searchReadout.textContent = 'Busca productos';
-                resultsList.innerHTML = '';
-                resultsContainer.classList.add('hidden');
-                localStorage.removeItem('search');
-                return;
-            }
-
-            resultsContainer.classList.remove('hidden');
-            if (!update) return;
-
-            const searchTerm = searchInputValue;
-            updateDocumentTitle(searchTerm);
-            updateSearchReadout(searchTerm);
-            fetchSearchResults(searchTerm);
-            updateSearchPageURL(searchTerm);
-        });
     });
 </script>

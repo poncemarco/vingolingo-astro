@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { type TicketItemDisplayInfo, addTicketItem, getTicketItems } from '@/stores/ticketStore.ts';
+import { addTicketItem, getTicketItems } from '@/stores/ticketStore.ts';
 import Toast from '@/components/ui/notifications/Toast.tsx';
 import IntCounter from '@/components/utils/IntCounter.tsx';
 import FloatCounter from '@/components/utils/FloatCounter.tsx';
@@ -8,18 +8,15 @@ import type { Datum } from '@/types/items.ts';
 
 export default function CardCatalog({ name, price, image, id, unit, category, slug }: Datum) {
     const [quantity, setQuantity] = useState(0);
-    const [showToast, setShowToast] = useState(false);
+    // const [showToast, setShowToast] = useState(false);
     const isInitialMount = useRef(true);
 
-    // Sincronización automática con el store
     useEffect(() => {
         if (isInitialMount.current) {
-            // Carga inicial desde el store
             const storedItem = getTicketItems(id);
             if (storedItem) setQuantity(storedItem.quantity);
             isInitialMount.current = false;
         } else {
-            // Guarda automáticamente al detectar cambios
             const updatedItem = {
                 id,
                 name,
@@ -30,9 +27,9 @@ export default function CardCatalog({ name, price, image, id, unit, category, sl
                 unit,
             };
             addTicketItem(updatedItem);
-            setShowToast(true);
+            // setShowToast(true);
         }
-    }, [quantity]); // Se ejecuta cada vez que cambia quantity
+    }, [quantity]);
 
     const handleAdd = () => setQuantity(prev => prev + 1);
     const handleSubtract = () => setQuantity(prev => Math.max(0, prev - 1));
@@ -68,13 +65,13 @@ export default function CardCatalog({ name, price, image, id, unit, category, sl
                     />
                 )}
             </div>
-            {showToast && (
+            {/* {showToast && (
                 <Toast 
                     name={name} 
                     quantity={quantity}
                     itsKg={unit === "KG"}
                 />
-            )}
+            )} */}
         </div>
     );
 }

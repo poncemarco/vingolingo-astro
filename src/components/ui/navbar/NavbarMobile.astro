@@ -3,13 +3,12 @@ import Home from "@/components/ui/icons/layout/Home.astro"
 import Catalog from "@/components/ui/icons/layout/Catalog.astro"
 import Cart from "@/components/ui/icons/layout/Cart.astro"
 import Search from "@/components/ui/icons/layout/Search.astro"
-import { COLOR_PALETTE } from "@/consts/colors"
-
-const { primary_color } = COLOR_PALETTE
+import MobileSearch from "@/components/ui/search/MobileSearch.astro" // Importar el modal de búsqueda
 ---
-<style define:vars={{ primary_color }}>
+
+<style>
     .mobile-navbar {
-        background: #f12  ;
+        background: #f12;
     }
 </style>
 
@@ -27,9 +26,19 @@ const { primary_color } = COLOR_PALETTE
             <Cart />
             <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Carrito</span>
         </a>
-        <button type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+        <!-- Botón de búsqueda para abrir el modal -->
+        <button
+            type="button"
+            onclick="document.getElementById('mobileSearchModal').classList.remove('hidden')"
+            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        >
             <Search />
             <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Buscar</span>
         </button>
     </div>
+</div>
+
+<!-- Modal de búsqueda -->
+<div id="mobileSearchModal" class="hidden">
+    <MobileSearch />
 </div>

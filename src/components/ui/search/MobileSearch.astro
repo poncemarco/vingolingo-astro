@@ -1,0 +1,37 @@
+<div class="fixed inset-0 bg-white dark:bg-gray-900 z-50 p-4">
+    <div class="flex items-center justify-between mb-4">
+        <input 
+            type="search" 
+            id="search-mobile" 
+            class="p-4 ps-10 text-sm text-gray-600 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+            placeholder="Busca por producto, categoria o marca" 
+            aria-label="Search"
+            required
+        >
+        <!-- Botón para cerrar el modal -->
+        <button
+            onclick="document.getElementById('mobileSearchModal').classList.add('hidden')"
+            class="ml-4 p-2 text-gray-600 dark:text-gray-400"
+        >
+            Cerrar
+        </button>
+    </div>
+    <div id="mobileResultsContainer" class="absolute top-20 left-0 right-0 bottom-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-y-auto">
+        <p id="mobileSearchReadout" class="dark:text-white my-2 px-4"></p>
+        <ul id="mobileSearchResults" class="dark:bg-gray-800 dark:text-white"></ul>
+    </div>
+</div>
+
+<script>
+    import { initializeSearch } from '@/components/utils/searchLogic.ts'; // Asegúrate de que la ruta sea correcta
+    document.addEventListener('astro:page-load', () => {
+        const searchInput = document.getElementById('search-mobile') as HTMLInputElement;
+        const searchReadout = document.getElementById('mobileSearchReadout') as HTMLParagraphElement;
+        const resultsList = document.getElementById('mobileSearchResults') as HTMLUListElement;
+        const resultsContainer = document.getElementById('mobileResultsContainer') as HTMLDivElement;
+
+        if (searchInput && searchReadout && resultsList && resultsContainer) {
+            initializeSearch(searchInput, searchReadout, resultsList, resultsContainer);
+        }
+    });
+</script>

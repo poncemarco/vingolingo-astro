@@ -14,6 +14,7 @@ import FloatingWhatsappButton from '@/components/ui/buttons/FloatingWhatsappButt
 		}
 		return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'light';
 	};
+
 	const isDark = getThemePreference() === 'dark';
 	document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
 
@@ -23,6 +24,26 @@ import FloatingWhatsappButton from '@/components/ui/buttons/FloatingWhatsappButt
 			localStorage.setItem('theme', isDark ? 'dark' : 'light');
 		});
 		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+	}
+
+	function adjustMainPadding() {
+		const navbar = document.querySelector('header'); // Selecciona el header que contiene el navbar
+		const mainContent = document.querySelector('body'); // Selecciona el body para aplicar el padding
+		if (navbar && mainContent) {
+			const navbarHeight = navbar.offsetHeight; // Obtiene la altura del navbar
+			mainContent.style.paddingTop = `${navbarHeight}px`; // Aplica el padding al body
+		}
+	}
+	window.addEventListener('load', adjustMainPadding);
+
+	// Ajustar el padding al cambiar el tamaño de la ventana
+	window.addEventListener('resize', adjustMainPadding);
+
+	// Ajustar el padding si el navbar cambia dinámicamente (opcional)
+	const navbarObserver = new MutationObserver(adjustMainPadding);
+	const navbarElement = document.querySelector('header');
+	if (navbarElement) {
+		navbarObserver.observe(navbarElement, { attributes: true, childList: true, subtree: true });
 	}
 </script>
 <!doctype html>
@@ -42,6 +63,7 @@ import FloatingWhatsappButton from '@/components/ui/buttons/FloatingWhatsappButt
 		</Header>
 
 		<slot />
+
 		<FloatingWhatsappButton 
 			phoneNumber='5225322808'
 			message='¡Hola! Tengo una duda sobre...'
@@ -49,4 +71,3 @@ import FloatingWhatsappButton from '@/components/ui/buttons/FloatingWhatsappButt
 		<Footer />
 	</body>
 </html>
-
