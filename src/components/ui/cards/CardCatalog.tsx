@@ -33,10 +33,7 @@ export default function CardCatalog({ name, price, image, id, unit, category, sl
 
     const saveItem = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const updatedQuantity = quantity === 0 ? 1 : quantity;
-        if (quantity === 0) {
-            setQuantity(1);
-        }
+        const updatedQuantity = quantity + 1;
         setItem((prevItem) => {
             const updatedItem = {
                 ...prevItem,
