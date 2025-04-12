@@ -8,16 +8,6 @@ import FloatingWhatsappButton from '@/components/ui/buttons/FloatingWhatsappButt
 ---
 
 <script is:inline>
-	const getThemePreference = () => {
-		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-			return localStorage.getItem('theme');
-		}
-		return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'light';
-	};
-
-	const isDark = getThemePreference() === 'dark';
-	document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-
 	if (typeof localStorage !== 'undefined') {
 		const observer = new MutationObserver(() => {
 			const isDark = document.documentElement.classList.contains('dark');
@@ -27,13 +17,16 @@ import FloatingWhatsappButton from '@/components/ui/buttons/FloatingWhatsappButt
 	}
 
 	function adjustMainPadding() {
-		const navbar = document.querySelector('header'); // Selecciona el header que contiene el navbar
-		const mainContent = document.querySelector('body'); // Selecciona el body para aplicar el padding
-		if (navbar && mainContent) {
-			const navbarHeight = navbar.offsetHeight; // Obtiene la altura del navbar
-			mainContent.style.paddingTop = `${navbarHeight}px`; // Aplica el padding al body
-		}
-	}
+        const navbar = document.querySelector('header'); // Selecciona el header que contiene el navbar
+        const mainContent = document.querySelector('body'); // Selecciona el body para aplicar el padding
+
+        if (window.innerWidth > 768 && navbar && mainContent) {
+            const navbarHeight = navbar.offsetHeight;
+            mainContent.style.paddingTop = `${navbarHeight}px`;
+        } else if (mainContent) {
+            mainContent.style.paddingTop = '';
+        }
+    }
 	window.addEventListener('load', adjustMainPadding);
 
 	// Ajustar el padding al cambiar el tamaño de la ventana

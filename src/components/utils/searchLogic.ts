@@ -1,4 +1,3 @@
-// searchLogic.ts
 import DOMPurify from 'dompurify';
 import Fuse, { type IFuseOptions } from 'fuse.js';
 import { generateSearchList } from '@/components/utils/SearchList';
@@ -21,18 +20,24 @@ export function initializeSearch(
         includeScore: true,
         shouldSort: true,
         keys: [
-            { name: 'name', weight: 0.7 },
-            { name: 'category', weight: 0.5 },
-            { name: 'unit', weight: 0.3 },
+            { name: 'name', weight: 0.8 }, 
+            { name: 'category', weight: 0.3 }, 
+            { name: 'unit', weight: 0.2 }, 
         ],
-        threshold: 0.5,
+        threshold: 0.4, 
+        ignoreLocation: false,
+        minMatchCharLength: 3,
+        distance: 50, 
     };
 
     const FUSE_CATEGORY_OPTIONS: IFuseOptions<Category> = {
         includeScore: true,
         shouldSort: true,
-        keys: [{ name: 'name', weight: 0.5 }],
-        threshold: 0.5,
+        keys: [{ name: 'name', weight: 0.8 }],
+        threshold: 0.4, 
+        ignoreLocation: false,
+        minMatchCharLength: 3, 
+        distance: 50,
     };
 
     async function fetchSearchResults(search: string): Promise<void> {
@@ -93,12 +98,5 @@ export function initializeSearch(
         const searchTerm = DOMPurify.sanitize(searchInput.value);
         fetchSearchResults(searchTerm);
         updateSearchReadout(searchTerm);
-    });
-
-    searchInput.addEventListener('input', () => {
-        const searchInputValue = DOMPurify.sanitize(searchInput.value);
-        console.log("Texto ingresado:", searchInputValue); // Debug: Verifica que esto se imprima
-        fetchSearchResults(searchInputValue);
-        updateSearchReadout(searchInputValue);
     });
 }

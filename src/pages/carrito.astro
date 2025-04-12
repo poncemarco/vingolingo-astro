@@ -5,11 +5,8 @@ import SectionTitle from "@/components/ui/text/SectionTitle.astro"
 ---
 
 
-<Layout title="carrito">
-    <SectionTitle 
-        title="Carrito de compra"
-        description="Revisa los detalles de tu compra y completa el proceso de pago."
-    />
+<Layout title="carrito" description="Revisa los detalles de tu compra y completa el proceso de pago.">
+    <SectionTitle title="Carrito de compras" description="Revisa los detalles de tu compra y completa el proceso de pago."/>
     <section class="py-2 mx-auto max-w-xl lg:py-16 lg:px-6 xl:max-w-5xl">
         <div class="mx-auto text-center mb-8 lg:mb-16">
             <TicketOrder client:load/>

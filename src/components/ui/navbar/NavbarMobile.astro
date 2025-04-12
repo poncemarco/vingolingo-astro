@@ -4,6 +4,7 @@ import Catalog from "@/components/ui/icons/layout/Catalog.astro"
 import Cart from "@/components/ui/icons/layout/Cart.astro"
 import Search from "@/components/ui/icons/layout/Search.astro"
 import MobileSearch from "@/components/ui/search/MobileSearch.astro" // Importar el modal de búsqueda
+// import { CartButton } from "@/components/ui/navbar/cart-button"
 ---
 
 <style>
@@ -12,28 +13,27 @@ import MobileSearch from "@/components/ui/search/MobileSearch.astro" // Importar
     }
 </style>
 
-<div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:border-gray-600">
+<div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-primary border-t border-gray-200 dark:border-gray-600">
     <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
-        <a href="/" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+        <a href="/" type="button" class="inline-flex flex-col items-center justify-center px-5 text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 group">
             <Home />
-            <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Inicio</span>
+            <span class="text-sm text-gray-100 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Inicio</span>
         </a>
-        <a href="/catalogo" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+        <a href="/catalogo" type="button" class="inline-flex flex-col items-center justify-center px-5 text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 group">
             <Catalog />
-            <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Catalogo</span>
+            <span class="text-sm text-gray-100 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Catalogo</span>
         </a>
-        <a href="/compra" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+        <a href="/carrito" type="button" class="inline-flex flex-col items-center justify-center px-5 text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 group">
             <Cart />
-            <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Carrito</span>
+            <span class="text-sm text-gray-100 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Carrito</span>
         </a>
-        <!-- Botón de búsqueda para abrir el modal -->
         <button
             type="button"
             onclick="document.getElementById('mobileSearchModal').classList.remove('hidden')"
-            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            class="inline-flex flex-col items-center justify-center px-5 text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 group"
         >
             <Search />
-            <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Buscar</span>
+            <span class="text-sm text-gray-100 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Buscar</span>
         </button>
     </div>
 </div>

@@ -59,7 +59,7 @@ export default function SendTicketForm() {
 
 const OrderForm = ({ name, setName, phone, setPhone, email, setEmail, coupon, setCoupon, address, setAddress, error, sendingOrder, sendTicket }: any) => (
     <div>
-        <div className="max-w-sm mx-auto">
+        <div className="max-w-sm mx-auto px-4">
             <div className="mb-5">
                 {error.name && <p className="text-red-500 text-xs italic mb-2">{error.name}</p>}
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tu nombre / Empresa</label>

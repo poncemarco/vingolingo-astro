@@ -23,6 +23,10 @@ export default defineConfig({
         context: 'client',
         access: 'public',
       }),
+      SITE_URL: envField.string({
+        context: 'client',
+        access: 'public',
+      }),
     }
   }
 });
