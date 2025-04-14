@@ -1,4 +1,4 @@
-import { type Datum, type Items } from '@/types/items';
+import { type Datum } from '@/types/items';
 import { SITE_URL } from '@/consts/https';
 import type { Category } from '@/types/categories'
 

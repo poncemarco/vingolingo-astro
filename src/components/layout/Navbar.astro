@@ -4,7 +4,7 @@ import NavbarMobile from "@/components/ui/navbar/NavbarMobile.astro"
 ---
 <nav class="bg-primary">
     <div id="desktop-navbar" class="hidden sm:block">
-        <NavbarDesktop />
+        <NavbarDesktop transition:persist/>
     </div>
     <div id="mobile-navbar" class="sm:hidden">
         <NavbarMobile/>

@@ -1,8 +1,9 @@
 import React from "react";
-import { ticketItems } from "@/stores/ticketStore";
+import { ticketItems, getItemsCount } from "@/stores/ticketStore";
 
 export function CartButton() {
-    const [total, setTotal] = React.useState(0);
+    let firstCount = getItemsCount();
+    const [total, setTotal] = React.useState(firstCount);
 
     React.useEffect(() => {
         return ticketItems.listen((items) => {
@@ -11,9 +12,7 @@ export function CartButton() {
             }, 0);
             setTotal(totalItems);
         });
-
     }, []);
-
     return (
         <a href="/carrito">
             <div className='text-gray-100 flex-row justify-center cursor-pointer text-xl focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-normal rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2 hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-110 hover:text-white scale-90 gap-x-2 opacity-90 hover:opacity-100 dark:dark:text-gray-100'>

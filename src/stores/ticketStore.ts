@@ -25,6 +25,14 @@ export function getTicketItems(id : string) {
     return Item;
 }
 
+export function getItemsCount() {
+    const items = ticketItems.get();
+    const totalItems = Object.values(items).reduce((acc, item) => {
+        return acc + item.quantity;
+    }, 0);
+    return totalItems;
+}
+
 
 // ticketStore.ts
 export function addTicketItem(item: TicketItem) {

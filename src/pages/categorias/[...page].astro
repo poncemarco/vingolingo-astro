@@ -40,12 +40,12 @@ const { prev, next } = url
             </div>
             <div class="flex items-center justify-center my-8">
                 <Pagination 
-                firstPage={prev ? '/categorias' : null}
-                previousPage={prev ? prev : null}
-                nextPage={next ? next : null}
-                lastPage={next ? `/categorias/${Math.round(total / size)}` : null}
-                currentPage={currentPage}
-                totalPages={Math.round(total / size) }
+                    firstPage={prev ? '/categorias' : null}
+                    previousPage={prev ? prev : null}
+                    nextPage={next ? next : null}
+                    lastPage={next ? `/categorias/${Math.round(total / size)}` : null}
+                    currentPage={currentPage}
+                    totalPages={Math.round(total / size) }
                 />
             </div>
         </div>

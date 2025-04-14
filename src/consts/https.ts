@@ -1,2 +1,3 @@
-export const BaseURL = "https://cacomixtle.com.mx";
-export const SITE_URL = "https://cacomixtle.com.mx";
+import { BACK_URL } from 'astro:env/client';
+
+export const SITE_URL = `${BACK_URL}/`;
